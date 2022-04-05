@@ -26,30 +26,22 @@ void updateReading()
     pinMode(echoPin, INPUT);
     unsigned long duration = pulseIn(echoPin, HIGH, timeout);
     if (duration > 0)
-    {
         distance = readingSF * ((double)duration * 0.0172) + (1 - readingSF) * distance;
-    }
 }
 
 void updateServo()
 {
     if (desiredPos > currentPos)
-    {
         currentPos++;
-    }
     if (desiredPos < currentPos)
-    {
         currentPos--;
-    }
     servo.writeMicroseconds(currentPos);
 }
 
 void open()
 {
     if (debuggingLevel == 1)
-    {
         Serial.println("opening...");
-    }
     servoInterval = openInterval;
     threshold = openThreshold;
     desiredPos = openPos;
@@ -60,9 +52,7 @@ void open()
 void close()
 {
     if (debuggingLevel == 1)
-    {
         Serial.println("closing...");
-    }
     servoInterval = closeInterval;
     threshold = closeThreshold;
     desiredPos = closePos;
@@ -76,9 +66,7 @@ void clawIsLowered()
     isNear = true;
     tNear = tms;
     if (debuggingLevel == 1)
-    {
         Serial.println("claw lowered");
-    }
 }
 
 void clawIsRaised()
@@ -87,24 +75,16 @@ void clawIsRaised()
     isNear = false;
     isArmed = true;
     if (debuggingLevel == 1)
-    {
         Serial.println("claw lifted");
-    }
 }
 
 void triggerClaw()
 {
     if (isOpen)
-    {
         close();
-    }
-    else if (!isOpen)
-    {
+    else
         open();
-    }
     isArmed = false;
     if (debuggingLevel == 1)
-    {
         Serial.println("claw disarmed");
-    }
 }

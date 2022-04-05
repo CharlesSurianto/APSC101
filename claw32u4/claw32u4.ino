@@ -16,40 +16,31 @@ void setup()
     pinMode(buttonPin, INPUT_PULLUP);
     open();
     if (debuggingLevel > 0)
-    {
         Serial.begin(baudRate);
-    }
 }
 
 void loop()
 {
     bool buttonS = digitalRead(buttonPin);
     if (buttonS < buttonLS)
-    {
         triggerClaw();
-    }
+
     buttonLS = buttonS;
 
     if (currentPos == desiredPos)
-    {
         updateReading();
-    }
 
     tms = millis();
     tus = micros();
 
     if (distance < threshold && !isNear)
-    {
         clawIsLowered();
-    }
+
     if (distance > threshold && isNear)
-    {
         clawIsRaised();
-    }
+
     if (tms - tNear >= wait && isArmed && isNear)
-    {
         triggerClaw();
-    }
 
     if (tus - tServo >= servoInterval && currentPos != desiredPos)
     {
@@ -58,7 +49,5 @@ void loop()
     }
 
     if (debuggingLevel == 2)
-    {
         printRawData();
-    }
 }
